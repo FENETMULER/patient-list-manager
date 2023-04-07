@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// SidebarTile
+
 const Color sideBarTileTextColorSelected = Color(0xFFFFFFFF);
 
 const Color sideBarTileTextColorUnselected = Colors.black;
@@ -16,3 +18,5 @@ const TextStyle sideBarTileTextStyleUnselected = TextStyle(
 
 const Color sideBarTileBackgroundColorSelected = Color(0xFF0085FF);
 const Color sideBarTileBackgroundColorUnselected = Colors.transparent;
+const Color sideBarTileBackgroundColorHover =
+    Color.fromARGB(255, 148, 221, 255);

@@ -20,7 +20,7 @@ class SidebarTile extends StatelessWidget {
           (states) {
             if (states.contains(MaterialState.hovered)) {
               return !isSelected
-                  ? Color.fromARGB(255, 148, 221, 255)
+                  ? sideBarTileBackgroundColorHover
                   : sideBarTileBackgroundColorSelected;
             }
             return isSelected
