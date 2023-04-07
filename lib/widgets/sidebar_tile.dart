@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../styles.dart';
 
 class SidebarTile extends StatelessWidget {
   final IconData icon;
@@ -14,18 +13,18 @@ class SidebarTile extends StatelessWidget {
       style: ButtonStyle(
         iconColor: MaterialStateProperty.all(Colors.black),
         padding: MaterialStateProperty.all(
-          EdgeInsets.symmetric(vertical: 25.0, horizontal: 20.0),
+          const EdgeInsets.symmetric(vertical: 25.0, horizontal: 20.0),
         ),
         backgroundColor: MaterialStateProperty.resolveWith(
           (states) {
             if (states.contains(MaterialState.hovered)) {
               return !isSelected
-                  ? sideBarTileBackgroundColorHover
-                  : sideBarTileBackgroundColorSelected;
+                  ? Theme.of(context).hoverColor
+                  : Theme.of(context).primaryColor;
             }
             return isSelected
-                ? sideBarTileBackgroundColorSelected
-                : sideBarTileBackgroundColorUnselected;
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).cardColor;
           },
         ),
       ),
@@ -34,13 +33,18 @@ class SidebarTile extends StatelessWidget {
         children: [
           Icon(icon,
               color: isSelected
-                  ? sideBarTileTextColorSelected
-                  : sideBarTileTextColorUnselected),
-          SizedBox(width: 30),
-          Text(title,
-              style: isSelected
-                  ? sideBarTileTextStyleSelected
-                  : sideBarTileTextStyleUnselected),
+                  ? Theme.of(context).textTheme.labelLarge!.color
+                  : Colors.black),
+          const SizedBox(width: 30),
+          Text(
+            title,
+            style: isSelected
+                ? Theme.of(context).textTheme.labelLarge
+                : Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.black),
+          ),
         ],
       ),
     );

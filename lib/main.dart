@@ -32,7 +32,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'NunitoSans'),
+      theme: ThemeData(
+        fontFamily: 'NunitoSans',
+        colorScheme: ColorScheme.fromSwatch(
+          backgroundColor: const Color(0xFFBCE3EC),
+        ),
+        textTheme: const TextTheme(
+          labelLarge: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16.0),
+          bodySmall: TextStyle(
+              color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14.0),
+        ),
+        primaryColor: const Color(0xff0085FF),
+        cardColor: Colors.transparent,
+        hoverColor: const Color.fromARGB(255, 148, 221, 255),
+      ),
       home: MainView(),
     );
   }
