@@ -1,14 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../styles.dart';
 
 class SidebarTile extends StatelessWidget {
+  final IconData icon;
   final String title;
-  const SidebarTile({required this.title});
+  final bool isSelected;
+  const SidebarTile(
+      {required this.icon, required this.title, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [Icon(FontAwesomeIcons.house), Text('Home')],
+    return TextButton(
+      style: ButtonStyle(
+        iconColor: MaterialStateProperty.all(Colors.black),
+        padding: MaterialStateProperty.all(
+          EdgeInsets.symmetric(vertical: 25.0, horizontal: 20.0),
+        ),
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.hovered)) {
+              return !isSelected
+                  ? Color.fromARGB(255, 148, 221, 255)
+                  : sideBarTileBackgroundColorSelected;
+            }
+            return isSelected
+                ? sideBarTileBackgroundColorSelected
+                : sideBarTileBackgroundColorUnselected;
+          },
+        ),
+      ),
+      onPressed: () {},
+      child: Row(
+        children: [
+          Icon(icon,
+              color: isSelected
+                  ? sideBarTileTextColorSelected
+                  : sideBarTileTextColorUnselected),
+          SizedBox(width: 30),
+          Text(title,
+              style: isSelected
+                  ? sideBarTileTextStyleSelected
+                  : sideBarTileTextStyleUnselected),
+        ],
+      ),
     );
   }
 }

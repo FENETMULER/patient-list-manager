@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import './sidebar_tile.dart';
 
 class Sidebar extends StatefulWidget {
@@ -12,9 +14,14 @@ class _SidebarState extends State<Sidebar> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        // TODO: Add image here
-        SidebarTile(title: 'Home')
+      children: const [
+        Image(image: AssetImage('images/app_logo.png')),
+        SidebarTile(
+            isSelected: true, icon: FontAwesomeIcons.house, title: 'Home'),
+        SidebarTile(
+            isSelected: false,
+            icon: FontAwesomeIcons.person,
+            title: 'Patient List')
       ],
     );
   }
