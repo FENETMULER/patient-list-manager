@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   window_manager: ^0.3.1
   font_awesome_flutter: ^10.4.0
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:

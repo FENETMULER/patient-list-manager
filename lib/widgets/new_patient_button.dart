@@ -28,9 +28,7 @@ class _NewPatientButtonState extends State<NewPatientButton> {
           });
         },
         child: GestureDetector(
-          onTap: () {
-            print('hello');
-          },
+          onTap: () {},
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             width: 200,

@@ -43,14 +43,19 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 39.0,
               letterSpacing: -0.3),
+          bodyLarge: TextStyle(
+            fontSize: 18.0,
+          ),
           labelLarge: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.0),
+          labelMedium: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+          labelSmall: TextStyle(fontSize: 14.0, letterSpacing: .7),
           bodySmall: TextStyle(
               color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14.0),
         ),
         primaryColor: const Color(0xff0085FF),
         disabledColor: Colors.transparent, // for an unselected SidebarTile
-        hoverColor: const Color.fromARGB(255, 148, 221, 255),
+        hoverColor: Color.fromARGB(255, 102, 207, 255),
       ),
       home: MainView(),
     );
