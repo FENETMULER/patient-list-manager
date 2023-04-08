@@ -24,7 +24,7 @@ class SidebarTile extends StatelessWidget {
             }
             return isSelected
                 ? Theme.of(context).primaryColor
-                : Theme.of(context).cardColor;
+                : Theme.of(context).disabledColor;
           },
         ),
       ),
