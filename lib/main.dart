@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
               fontSize: 39.0,
               letterSpacing: -0.3),
           labelLarge: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16.0),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.0),
           bodySmall: TextStyle(
               color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14.0),
         ),
