@@ -3,9 +3,14 @@ import 'package:intl/intl.dart';
 
 import '../widgets/patient_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   String getCurrentDate() {
     DateTime today = DateTime.now();
     String formattedDate = DateFormat('MMMM dd, yyyy').format(today);
