@@ -11,7 +11,10 @@ class PatientCard extends StatelessWidget {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Card(
-          elevation: 4,
+          elevation: 7,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30.0),
@@ -48,10 +51,13 @@ class PatientCard extends StatelessWidget {
               const SizedBox(width: 200.0),
               Row(
                 children: [
-                  const Icon(FontAwesomeIcons.phone, size: 20.0),
+                  const Icon(FontAwesomeIcons.phone, size: 18.0),
                   const SizedBox(width: 10.0),
-                  Text('0938192033',
-                      style: Theme.of(context).textTheme.bodyLarge),
+                  Text(
+                    '0938192033',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.grey[600]),
+                  ),
                 ],
               )
             ]),
