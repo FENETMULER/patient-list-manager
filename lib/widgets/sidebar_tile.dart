@@ -4,8 +4,12 @@ class SidebarTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final bool isSelected;
+  final Function changePage;
   const SidebarTile(
-      {required this.icon, required this.title, required this.isSelected});
+      {required this.icon,
+      required this.title,
+      required this.isSelected,
+      required this.changePage});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,9 @@ class SidebarTile extends StatelessWidget {
           },
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        changePage(title == 'Home' ? 1 : 2);
+      },
       child: Row(
         children: [
           Icon(icon,

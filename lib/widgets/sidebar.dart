@@ -5,25 +5,26 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import './sidebar_tile.dart';
 
-class Sidebar extends StatefulWidget {
-  const Sidebar({super.key});
+class Sidebar extends StatelessWidget {
+  final Function changePage;
+  final int pageToDisplay;
+  const Sidebar({required this.changePage, required this.pageToDisplay});
 
-  @override
-  State<Sidebar> createState() => _SidebarState();
-}
-
-class _SidebarState extends State<Sidebar> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Image(image: AssetImage('images/app_logo.png')),
         SidebarTile(
-            isSelected: true, icon: FontAwesomeIcons.house, title: 'Home'),
+            isSelected: pageToDisplay == 1 ? true : false,
+            icon: FontAwesomeIcons.house,
+            title: 'Home',
+            changePage: changePage),
         SidebarTile(
-            isSelected: false,
+            isSelected: pageToDisplay == 2 ? true : false,
             icon: FontAwesomeIcons.person,
-            title: 'Patient List'),
+            title: 'Patient List',
+            changePage: changePage),
 
         // Version
         Expanded(
