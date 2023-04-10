@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: const Color(0xff0085FF),
         disabledColor: Colors.transparent, // for an unselected SidebarTile
-        hoverColor: Color.fromARGB(255, 102, 207, 255),
+        hoverColor: const Color.fromARGB(255, 102, 207, 255),
       ),
       home: MainView(),
     );
