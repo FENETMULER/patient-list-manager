@@ -6,7 +6,7 @@ class NoRecordFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(40.0, 25.0, 300, 25.0),
+      padding: const EdgeInsets.fromLTRB(40.0, 25.0, 390, 25.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: Colors.white,
