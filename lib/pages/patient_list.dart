@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../widgets/patient_card.dart';
+import '../widgets/no_record_found.dart';
 
 class PatientList extends StatefulWidget {
   const PatientList({super.key});
@@ -78,11 +80,12 @@ class _PatientListState extends State<PatientList> {
             ),
             const SizedBox(height: 15.0),
             // Recently Registered
-            Column(
-              children: [
-                PatientCard(),
-                PatientCard(),
-              ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [],
+                ),
+              ),
             ),
           ],
         ),
