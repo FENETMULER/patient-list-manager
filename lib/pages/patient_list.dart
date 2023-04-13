@@ -13,6 +13,7 @@ class PatientList extends StatefulWidget {
 
 class _PatientListState extends State<PatientList> {
   final TextEditingController searchController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,9 +82,15 @@ class _PatientListState extends State<PatientList> {
             const SizedBox(height: 15.0),
             // Recently Registered
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [],
+              child: Scrollbar(
+                thumbVisibility: true,
+                trackVisibility: true,
+                controller: scrollController,
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: Column(
+                    children: [],
+                  ),
                 ),
               ),
             ),
