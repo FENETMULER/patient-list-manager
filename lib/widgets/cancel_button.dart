@@ -6,7 +6,9 @@ class CancelButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(

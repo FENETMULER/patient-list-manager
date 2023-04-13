@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NewPatientButton extends StatefulWidget {
-  const NewPatientButton({super.key});
+  final VoidCallback onPressed;
+  const NewPatientButton({required this.onPressed});
 
   @override
   State<NewPatientButton> createState() => _NewPatientButtonState();
@@ -28,7 +29,9 @@ class _NewPatientButtonState extends State<NewPatientButton> {
           });
         },
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            widget.onPressed();
+          },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             width: 200,

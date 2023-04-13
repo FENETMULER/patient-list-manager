@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import './widgets/sidebar.dart';
 import './widgets/new_patient_button.dart';
 import './pages/home_page.dart';
 import './pages/patient_list.dart';
+import './widgets/update_or_register_patient.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -22,10 +21,21 @@ class _MainViewState extends State<MainView> {
     });
   }
 
+  void displayRegistrationDialog(context) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return UpdateOrRegisterPatient();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: const NewPatientButton(),
+      floatingActionButton: NewPatientButton(onPressed: () {
+        displayRegistrationDialog(context);
+      }),
       body: Row(
         children: [
           Expanded(

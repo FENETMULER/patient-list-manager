@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../widgets/patient_card.dart';
+import '../widgets/update_or_register_patient.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
               getCurrentDate(),
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 128, 128, 128),
+                    color: const Color.fromARGB(255, 128, 128, 128),
                   ),
             ),
             const SizedBox(height: 30.0),
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold, color: Colors.grey[800]),
             ),
             const SizedBox(height: 15.0),
+
             // Recently Registered
             Column(
               children: [
