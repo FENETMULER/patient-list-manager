@@ -9,9 +9,22 @@ class MainActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+        style: ButtonStyle(
+          elevation: MaterialStateProperty.resolveWith(((states) {
+            if (states.contains(MaterialState.hovered)) {
+              return 10.0;
+            }
+            return 3.0;
+          })),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        ),
         onPressed: onPressed,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
           child: Text(title),
         ));
   }
