@@ -99,7 +99,11 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                 children: [
                   CancelButton(),
                   const SizedBox(width: 25.0),
-                  MainActionButton(onPressed: () {}, title: 'REGISTER')
+                  MainActionButton(
+                    onPressed: () {},
+                    title: 'REGISTER',
+                    backgroundColor: Theme.of(context).primaryColor,
+                  )
                 ],
               )
             ],

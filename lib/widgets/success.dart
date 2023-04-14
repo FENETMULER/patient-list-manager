@@ -34,8 +34,10 @@ class Success extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.bold, color: Colors.grey[600]),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall!
+                  .copyWith(color: Colors.grey[600]),
             ),
             const SizedBox(height: 25.0),
             const Icon(FontAwesomeIcons.solidCircleCheck,
