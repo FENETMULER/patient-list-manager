@@ -28,7 +28,7 @@ class Success extends StatelessWidget {
       ),
       child: SizedBox(
         height: 200,
-        width: 400,
+        width: operation == Operation.registered ? 450 : 400,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
