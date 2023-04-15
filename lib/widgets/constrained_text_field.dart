@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class ConstrainedTextField extends StatelessWidget {
   final String label;
   final bool isMultiline;
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
+  final TextEditingController controller;
   const ConstrainedTextField(
       {required this.label,
       required this.isMultiline,
-      required this.validator});
+      required this.controller,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class ConstrainedTextField extends StatelessWidget {
       width: 200.0,
       child: TextFormField(
         validator: validator,
+        controller: controller,
         maxLines: isMultiline ? 5 : null,
         style: Theme.of(context).textTheme.labelMedium,
         decoration: InputDecoration(
