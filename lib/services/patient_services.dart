@@ -9,7 +9,7 @@ void connectDb() async {
   await db.open();
 }
 
-var coll = db.collection('users');
+var coll = db.collection('patients');
 
 void dbRegisterPatient(Map<String, dynamic> patientMap) async {
   var res = await coll.insertOne(patientMap).toString();
