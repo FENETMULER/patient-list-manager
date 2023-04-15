@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './cancel_button.dart';
-import './main_action_button.dart';
+import '../cancel_button.dart';
+import '../main_action_button.dart';
 
 class DeleteAlert extends StatelessWidget {
   const DeleteAlert({super.key});

@@ -3,14 +3,26 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import './constrained_text_field.dart';
-import './cancel_button.dart';
-import './main_action_button.dart';
+import '../constrained_text_field.dart';
+import '../cancel_button.dart';
+import '../main_action_button.dart';
+import '../../models/patient.dart';
 
 class UpdateOrRegisterPatient extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController();
-  UpdateOrRegisterPatient({super.key});
+  final Function registerPatient;
+  UpdateOrRegisterPatient({required this.registerPatient});
+
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController houseNumberController = TextEditingController();
+  final TextEditingController districtController = TextEditingController();
+  final TextEditingController subCityController = TextEditingController();
+  final TextEditingController diagnosisController = TextEditingController();
+  String? sexValue;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +68,7 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                             children: [
                               ConstrainedTextField(
                                 label: 'First Name',
+                                controller: firstNameController,
                                 isMultiline: false,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -70,6 +83,7 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                               ),
                               ConstrainedTextField(
                                 label: 'Last Name',
+                                controller: lastNameController,
                                 isMultiline: false,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -84,6 +98,7 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                               ),
                               ConstrainedTextField(
                                 label: 'Age',
+                                controller: ageController,
                                 isMultiline: false,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -108,7 +123,9 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                                           .textTheme
                                           .labelLarge!
                                           .copyWith(color: Colors.black)),
-                                  onChanged: (value) {},
+                                  onChanged: (value) {
+                                    sexValue = value;
+                                  },
                                   alignment: Alignment.center,
                                   items: [
                                     DropdownMenuItem(
@@ -141,6 +158,7 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                             children: [
                               ConstrainedTextField(
                                   label: 'Phone Number',
+                                  controller: phoneNumberController,
                                   isMultiline: false,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -153,17 +171,20 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                                     }
                                   }),
                               ConstrainedTextField(
-                                  label: 'House Number',
-                                  isMultiline: false,
-                                  validator: (value) {}),
+                                label: 'House Number',
+                                controller: houseNumberController,
+                                isMultiline: false,
+                              ),
                               ConstrainedTextField(
-                                  label: 'Woreda',
-                                  isMultiline: false,
-                                  validator: (value) {}),
+                                label: 'District / Woreda',
+                                controller: districtController,
+                                isMultiline: false,
+                              ),
                               ConstrainedTextField(
-                                  label: 'Sub-city',
-                                  isMultiline: false,
-                                  validator: (value) {})
+                                label: 'Sub-city',
+                                controller: subCityController,
+                                isMultiline: false,
+                              )
                             ],
                           ),
                           //Third Column
@@ -172,9 +193,10 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ConstrainedTextField(
-                                  label: 'Diagnosis',
-                                  isMultiline: true,
-                                  validator: (value) {}),
+                                label: 'Diagnosis',
+                                controller: diagnosisController,
+                                isMultiline: true,
+                              ),
                             ],
                           ),
                         ],
@@ -189,7 +211,21 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                       const SizedBox(width: 25.0),
                       MainActionButton(
                         onPressed: () {
-                          _formKey.currentState!.validate();
+                          var isFormValid = _formKey.currentState!.validate();
+                          if (isFormValid) {
+                            Patient newPatient = Patient(
+                              firstName: firstNameController.text,
+                              lastName: lastNameController.text,
+                              age: int.parse(ageController.text),
+                              sex: sexValue!,
+                              phoneNumber: phoneNumberController.text,
+                              houseNumber: houseNumberController.text,
+                              district: districtController.text,
+                              subCity: subCityController.text,
+                              diagnosis: diagnosisController.text,
+                            );
+                            registerPatient(newPatient);
+                          }
                         },
                         title: 'REGISTER',
                         backgroundColor: Theme.of(context).primaryColor,
