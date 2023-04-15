@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
 import './main_view.dart';
+import './services/patient_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,8 @@ void main() async {
 
   windowManager.setResizable(false);
   windowManager.setMaximizable(false);
+
+  connectDb(); // connect to database
   runApp(MyApp());
 }
 
