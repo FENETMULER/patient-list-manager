@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../models/patient.dart';
 
 class PatientCard extends StatelessWidget {
-  const PatientCard({super.key});
+  final Patient patient;
+  const PatientCard(this.patient);
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +22,29 @@ class PatientCard extends StatelessWidget {
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30.0),
             child: Row(children: [
               CircleAvatar(
-                child: Text('A', style: Theme.of(context).textTheme.labelLarge),
+                child: Text(patient.getInitial,
+                    style: Theme.of(context).textTheme.labelLarge),
               ),
               const SizedBox(width: 30.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Abebe Kebede',
+                  Text('${patient.firstName} ${patient.lastName}',
                       style: Theme.of(context).textTheme.labelMedium),
                   const SizedBox(height: 3.0),
                   Row(
                     children: [
-                      const Icon(FontAwesomeIcons.person, size: 20.0),
+                      Icon(
+                          patient.sex == 'Male'
+                              ? FontAwesomeIcons.person
+                              : FontAwesomeIcons.personDress,
+                          size: 22.0),
                       const SizedBox(width: 5.0),
-                      Text('Male',
+                      Text(patient.sex,
                           style: Theme.of(context).textTheme.labelSmall),
                       const SizedBox(width: 20.0),
                       Text(
-                        '56',
+                        patient.age.toString(),
                         style: Theme.of(context).textTheme.labelSmall!.copyWith(
                             fontSize: 16.0, fontWeight: FontWeight.bold),
                       ),
@@ -49,16 +56,21 @@ class PatientCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(width: 200.0),
-              Row(
-                children: [
-                  const Icon(FontAwesomeIcons.phone, size: 18.0),
-                  const SizedBox(width: 10.0),
-                  Text(
-                    '0938192033',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.grey[600]),
-                  ),
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(FontAwesomeIcons.phone, size: 18.0),
+                    const SizedBox(width: 10.0),
+                    Expanded(
+                      child: Text(
+                        patient.phoneNumber,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600]),
+                      ),
+                    ),
+                  ],
+                ),
               )
             ]),
           ),
