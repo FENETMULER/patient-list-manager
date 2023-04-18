@@ -1,3 +1,5 @@
+import 'package:mongo_dart/mongo_dart.dart';
+
 class Patient {
   final String firstName;
   final String lastName;
@@ -9,7 +11,7 @@ class Patient {
   final String? district;
   final String? subCity;
   final String? diagnosis;
-  final String? id;
+  final ObjectId? id;
   Patient(
       {required this.firstName,
       required this.lastName,
@@ -21,7 +23,8 @@ class Patient {
       this.district,
       this.subCity,
       this.diagnosis,
-      this.id});
+      this.id // not mandatory since it's only needed on data retrieval
+      });
 
   String get getInitial {
     return firstName[0];
