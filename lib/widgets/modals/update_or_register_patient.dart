@@ -22,7 +22,17 @@ class UpdateOrRegisterPatient extends StatelessWidget {
   final TextEditingController districtController = TextEditingController();
   final TextEditingController subCityController = TextEditingController();
   final TextEditingController diagnosisController = TextEditingController();
-  String? sexValue;
+  late String sexValue;
+
+  String capitalize(String str) {
+    // make first letter uppercase
+    if (str.isEmpty) return '';
+    if (str.length == 1) return str.toUpperCase();
+    var lowerCaseStr = str.toLowerCase();
+    var upperCaseFirstLetter = lowerCaseStr[0].toUpperCase();
+    var restOfWord = lowerCaseStr.substring(1);
+    return upperCaseFirstLetter + restOfWord;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +86,8 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                                   }
 
                                   RegExp regex = RegExp(r'^[a-zA-Z]+$');
-                                  if (!regex.hasMatch(value)) {
+                                  if (!regex.hasMatch(value) ||
+                                      value.length < 3) {
                                     return 'Invalid First Name';
                                   }
                                 },
@@ -91,7 +102,8 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                                   }
 
                                   RegExp regex = RegExp(r'^[a-zA-Z]+$');
-                                  if (!regex.hasMatch(value)) {
+                                  if (!regex.hasMatch(value) ||
+                                      value.length < 3) {
                                     return 'Invalid Last Name';
                                   }
                                 },
@@ -124,7 +136,7 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                                           .labelLarge!
                                           .copyWith(color: Colors.black)),
                                   onChanged: (value) {
-                                    sexValue = value;
+                                    sexValue = value!;
                                   },
                                   alignment: Alignment.center,
                                   items: [
@@ -166,7 +178,9 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                                     }
 
                                     int? number = int.tryParse(value);
-                                    if (number == null || value.length < 10) {
+                                    if (number == null ||
+                                        value.length < 10 ||
+                                        value.length > 10) {
                                       return 'Invalid Phone Number';
                                     }
                                   }),
@@ -203,27 +217,30 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 5.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CancelButton(),
+                      const CancelButton(),
                       const SizedBox(width: 25.0),
                       MainActionButton(
                         onPressed: () {
                           var isFormValid = _formKey.currentState!.validate();
                           if (isFormValid) {
                             Patient newPatient = Patient(
-                              firstName: firstNameController.text,
-                              lastName: lastNameController.text,
+                              firstName: capitalize(firstNameController.text),
+                              lastName: capitalize(lastNameController.text),
                               age: int.parse(ageController.text),
-                              sex: sexValue!,
+                              sex: sexValue,
                               phoneNumber: phoneNumberController.text,
                               houseNumber: houseNumberController.text,
                               district: districtController.text,
-                              subCity: subCityController.text,
-                              diagnosis: diagnosisController.text,
+                              subCity: capitalize(subCityController.text),
+                              diagnosis: diagnosisController
+                                  .text, // didn't make uppercase
+                              registeredOn: DateTime.now(),
                             );
+
                             registerPatient(newPatient);
                           }
                         },
