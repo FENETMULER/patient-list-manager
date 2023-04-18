@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../main_action_button.dart';
 import '../cancel_button.dart';
@@ -9,6 +10,14 @@ import '../../models/patient.dart';
 class PatientDetails extends StatelessWidget {
   final Patient patient;
   final scrollController = ScrollController();
+
+  String getFormattedDateAndTime(DateTime date) {
+    var format = DateFormat('MMMM d, yyyy \'at\' hh:mm a');
+    var formattedDate = format.format(date
+        .toLocal()); // converting date to local time zone since date is stored in UTC in mongodb
+    return formattedDate;
+  }
+
   PatientDetails({required this.patient});
 
   Widget detailBuilder(
@@ -88,7 +97,8 @@ class PatientDetails extends StatelessWidget {
                               detailBuilder(
                                 context: context,
                                 title: 'Registered On',
-                                value: '{FORMATTED DATE}',
+                                value: getFormattedDateAndTime(
+                                    patient.registeredOn),
                               ),
                             ],
                           ),
