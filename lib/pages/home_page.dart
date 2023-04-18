@@ -54,23 +54,27 @@ class _HomePageState extends State<HomePage> {
                   dbGetRecentPatients(), // getting 5 recently registered patients.
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  return Column(
-                      children: snapshot.data!
-                          .sublist(snapshot.data!.length >= 5
-                              ? 4
-                              : snapshot.data!
-                                  .length) // only show a maximum of 5 items if list length is >= 5 else, just show all available elements
-                          .map((patientMap) => PatientCard(
-                                Patient(
-                                  firstName: patientMap['firstName'],
-                                  lastName: patientMap['lastName'],
-                                  age: patientMap['age'],
-                                  sex: patientMap['sex'],
-                                  phoneNumber: patientMap['phoneNumber'],
-                                  registeredOn: patientMap['registeredOn'],
-                                ),
-                              ))
-                          .toList());
+                  if (snapshot.hasError) {
+                    //return a widget to show error / show modal
+                  } else {
+                    return Column(
+                        children: snapshot.data!
+                            .map((patientMap) => PatientCard(
+                                  patient: Patient(
+                                      id: patientMap['_id'],
+                                      firstName: patientMap['firstName'],
+                                      lastName: patientMap['lastName'],
+                                      age: patientMap['age'],
+                                      sex: patientMap['sex'],
+                                      phoneNumber: patientMap['phoneNumber'],
+                                      registeredOn: patientMap['registeredOn'],
+                                      houseNumber: patientMap['houseNumber'],
+                                      district: patientMap['district'],
+                                      subCity: patientMap['subCity'],
+                                      diagnosis: patientMap['diagnosis']),
+                                ))
+                            .toList());
+                  }
                 }
                 return const CircularProgressIndicator();
               },
