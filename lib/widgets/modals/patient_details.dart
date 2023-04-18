@@ -12,7 +12,7 @@ class PatientDetails extends StatelessWidget {
   final scrollController = ScrollController();
 
   String getFormattedDateAndTime(DateTime date) {
-    var format = DateFormat('MMMM d, yyyy \'at\' hh:mm a');
+    var format = DateFormat('MMMM d, yyyy \'at\' h:mm a');
     var formattedDate = format.format(date
         .toLocal()); // converting date to local time zone since date is stored in UTC in mongodb
     return formattedDate;
