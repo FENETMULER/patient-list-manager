@@ -142,7 +142,7 @@ class PatientDetails extends StatelessWidget {
               const SizedBox(height: 15.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const CancelButton(),
                   const SizedBox(width: 25.0),
