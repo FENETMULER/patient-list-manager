@@ -4,7 +4,7 @@ import '../models/patient.dart';
 
 class PatientCard extends StatelessWidget {
   final Patient patient;
-  const PatientCard(this.patient);
+  const PatientCard({required this.patient});
 
   @override
   Widget build(BuildContext context) {
