@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/patient_card.dart';
 import '../widgets/no_record_found.dart';
+import '../services/patient_services.dart';
+import '../models/patient.dart';
 
 class PatientList extends StatefulWidget {
   const PatientList({super.key});
@@ -88,9 +90,12 @@ class _PatientListState extends State<PatientList> {
                 controller: scrollController,
                 child: SingleChildScrollView(
                   controller: scrollController,
-                  child: Column(
-                    children: [],
-                  ),
+                  child: FutureBuilder(
+                      // future: // Get patients based on search value
+                      builder: (context, snapshot) {
+                    return Container();
+                  } // Build list of PatientCards based on search value
+                      ),
                 ),
               ),
             ),
@@ -98,6 +103,5 @@ class _PatientListState extends State<PatientList> {
         ),
       ),
     );
-    ;
   }
 }

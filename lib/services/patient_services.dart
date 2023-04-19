@@ -40,3 +40,11 @@ Future<List<Map<String, dynamic>>> dbGetRecentPatients() async {
     return Future.error('error');
   }
 }
+
+Future<void> dbDeletePatient(id) async {
+  try {
+    await coll.deleteOne(where.eq('_id', id));
+  } catch (e) {
+    return Future.error('error');
+  }
+}

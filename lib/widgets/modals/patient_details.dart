@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../main_action_button.dart';
 import '../cancel_button.dart';
 import '../../models/patient.dart';
+import './delete_alert.dart';
 
 class PatientDetails extends StatelessWidget {
   final Patient patient;
@@ -16,6 +17,14 @@ class PatientDetails extends StatelessWidget {
     var formattedDate = format.format(date
         .toLocal()); // converting date to local time zone since date is stored in UTC in mongodb
     return formattedDate;
+  }
+
+  void showDeleteAlert(context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DeleteAlert(objectId: patient.id!);
+        });
   }
 
   PatientDetails({required this.patient});
@@ -155,9 +164,11 @@ class PatientDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const CancelButton(),
-                  const SizedBox(width: 25.0),
+                  const SizedBox(width: 15.0),
                   MainActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDeleteAlert(context);
+                      },
                       title: 'DELETE',
                       backgroundColor: Theme.of(context).colorScheme.error),
                   const SizedBox(width: 25.0),

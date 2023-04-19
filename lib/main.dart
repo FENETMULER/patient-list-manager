@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import './main_view.dart';
 import './services/patient_services.dart';
 
-void main() async {
+Future<void> main() async {
+  await connectDb(); // connect to database
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
 
@@ -24,8 +26,7 @@ void main() async {
   windowManager.setResizable(false);
   windowManager.setMaximizable(false);
 
-  connectDb(); // connect to database
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

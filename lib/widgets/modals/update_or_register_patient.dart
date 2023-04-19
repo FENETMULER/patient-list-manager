@@ -2,26 +2,47 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constrained_text_field.dart';
 import '../cancel_button.dart';
 import '../main_action_button.dart';
 import '../../models/patient.dart';
+import '../../utils/ui_helpers.dart';
+import './success.dart';
+import '../../services/patient_services.dart';
+import '../../providers/patients_providers.dart';
 
-class UpdateOrRegisterPatient extends StatelessWidget {
+class UpdateOrRegisterPatient extends ConsumerStatefulWidget {
+  const UpdateOrRegisterPatient();
+
+  @override
+  ConsumerState<UpdateOrRegisterPatient> createState() =>
+      _UpdateOrRegisterPatientState();
+}
+
+class _UpdateOrRegisterPatientState
+    extends ConsumerState<UpdateOrRegisterPatient> {
   final _formKey = GlobalKey<FormState>();
+
   final ScrollController _scrollController = ScrollController();
-  final Function registerPatient;
-  UpdateOrRegisterPatient({required this.registerPatient});
 
   final TextEditingController firstNameController = TextEditingController();
+
   final TextEditingController lastNameController = TextEditingController();
+
   final TextEditingController ageController = TextEditingController();
+
   final TextEditingController phoneNumberController = TextEditingController();
+
   final TextEditingController houseNumberController = TextEditingController();
+
   final TextEditingController districtController = TextEditingController();
+
   final TextEditingController subCityController = TextEditingController();
+
   final TextEditingController diagnosisController = TextEditingController();
+
   late String sexValue;
 
   String capitalize(String str) {
@@ -32,6 +53,26 @@ class UpdateOrRegisterPatient extends StatelessWidget {
     var upperCaseFirstLetter = lowerCaseStr[0].toUpperCase();
     var restOfWord = lowerCaseStr.substring(1);
     return upperCaseFirstLetter + restOfWord;
+  }
+
+  void registerPatient(Patient patient, context) async {
+    var patientMap = {
+      'firstName': patient.firstName,
+      'lastName': patient.lastName,
+      'age': patient.age,
+      'sex': patient.sex,
+      'phoneNumber': patient.phoneNumber,
+      'houseNumber': patient.houseNumber,
+      'district': patient.district,
+      'subCity': patient.subCity,
+      'diagnosis': patient.diagnosis,
+      'registeredOn': patient.registeredOn,
+    };
+    await dbRegisterPatient(patientMap);
+    ref.refresh(recentPatientsProvider);
+
+    await displaySuccessModal(Operation.registered, context);
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   @override
@@ -241,7 +282,7 @@ class UpdateOrRegisterPatient extends StatelessWidget {
                               registeredOn: DateTime.now(),
                             );
 
-                            registerPatient(newPatient);
+                            registerPatient(newPatient, context);
                           }
                         },
                         title: 'REGISTER',
