@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:patient_list_management_system/widgets/modals/patient_details.dart';
+
 import '../models/patient.dart';
+import '../utils/ui_helpers.dart';
 
 class PatientCard extends StatefulWidget {
   final Patient patient;
@@ -16,19 +17,12 @@ class _PatientCardState extends State<PatientCard> {
   Color _backgroundColor = Colors.white;
   double _elevation = 7;
 
-  void displayPatientDetailsModal() {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return PatientDetails(patient: widget.patient);
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: displayPatientDetailsModal,
+      onTap: () {
+        displayPatientDetailsModal(context, widget.patient);
+      },
       child: Padding(
         padding: const EdgeInsets.only(right: 200.0, bottom: 10.0),
         child: MouseRegion(
