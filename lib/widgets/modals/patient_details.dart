@@ -19,7 +19,7 @@ class PatientDetails extends StatelessWidget {
     return formattedDate;
   }
 
-  void showDeleteAlert(context) {
+  void displayDeleteAlert(context) {
     showDialog(
         context: context,
         builder: (context) {
@@ -167,7 +167,7 @@ class PatientDetails extends StatelessWidget {
                   const SizedBox(width: 15.0),
                   MainActionButton(
                       onPressed: () {
-                        showDeleteAlert(context);
+                        displayDeleteAlert(context);
                       },
                       title: 'DELETE',
                       backgroundColor: Theme.of(context).colorScheme.error),
