@@ -12,34 +12,39 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image(image: AssetImage('images/app_logo.png')),
-        SidebarTile(
-            isSelected: pageToDisplay == 1 ? true : false,
-            icon: FontAwesomeIcons.house,
-            title: 'Home',
-            changePage: changePage),
-        SidebarTile(
-            isSelected: pageToDisplay == 2 ? true : false,
-            icon: FontAwesomeIcons.person,
-            title: 'Patient List',
-            changePage: changePage),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          Image(image: AssetImage('images/app_logo.png')),
+          SidebarTile(
+              isSelected: pageToDisplay == 1 ? true : false,
+              icon: FontAwesomeIcons.house,
+              title: 'Home',
+              changePage: changePage),
+          SidebarTile(
+              isSelected: pageToDisplay == 2 ? true : false,
+              icon: FontAwesomeIcons.person,
+              title: 'Patient List',
+              changePage: changePage),
 
-        // Version
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.only(bottom: 20.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                'version 1.0.0',
-                style: Theme.of(context).textTheme.bodySmall,
+          // Version
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  'version 1.0.0',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
