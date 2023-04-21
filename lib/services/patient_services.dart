@@ -48,3 +48,22 @@ Future<void> dbDeletePatient(id) async {
     return Future.error('error');
   }
 }
+
+Future<void> dbUpdatePatient(Patient patient) async {
+  try {
+    await coll.replaceOne(where.eq('_id', patient.id), {
+      'firstName': patient.firstName,
+      'lastName': patient.lastName,
+      'age': patient.age,
+      'sex': patient.sex,
+      'phoneNumber': patient.phoneNumber,
+      'houseNumber': patient.houseNumber,
+      'district': patient.district,
+      'subCity': patient.subCity,
+      'diagnosis': patient.diagnosis,
+      'registeredOn': patient.registeredOn,
+    });
+  } catch (e) {
+    return Future.error('error');
+  }
+}
