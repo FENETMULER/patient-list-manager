@@ -14,8 +14,15 @@ import '../../services/patient_services.dart';
 import '../../providers/patients_providers.dart';
 
 class UpdateOrRegisterPatient extends ConsumerStatefulWidget {
-  const UpdateOrRegisterPatient();
+  late bool isUpdate;
+  Patient? patient;
+  UpdateOrRegisterPatient() {
+    isUpdate = false;
+  }
 
+  UpdateOrRegisterPatient.update({required this.patient}) {
+    isUpdate = true;
+  }
   @override
   ConsumerState<UpdateOrRegisterPatient> createState() =>
       _UpdateOrRegisterPatientState();
@@ -75,6 +82,32 @@ class _UpdateOrRegisterPatientState
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
+  void updatePatientRecord(patient, context) async {
+    await dbUpdatePatient(patient);
+    ref.refresh(recentPatientsProvider);
+
+    await displaySuccessModal(Operation.updated, context);
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    displayPatientDetailsModal(context, patient);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final patient = widget.patient;
+    if (widget.isUpdate == true) {
+      firstNameController.text = patient!.firstName;
+      lastNameController.text = patient.lastName;
+      ageController.text = patient.age.toString();
+      sexValue = patient.sex;
+      phoneNumberController.text = patient.phoneNumber;
+      houseNumberController.text = patient.houseNumber!;
+      districtController.text = patient.district!;
+      subCityController.text = patient.subCity!;
+      diagnosisController.text = patient.subCity!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
@@ -100,7 +133,9 @@ class _UpdateOrRegisterPatientState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Register New Patient',
+                    widget.isUpdate
+                        ? 'Update Patient Record'
+                        : 'Register New Patient',
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.grey[800]),
                   ),
@@ -166,6 +201,10 @@ class _UpdateOrRegisterPatientState
                               SizedBox(
                                 width: 200.0,
                                 child: DropdownButtonFormField(
+                                  value: widget
+                                          .isUpdate // default value of DropdownButtonFormField, even if it is set to null DropdownMenuItems can change that value when selected.
+                                      ? widget.patient!.sex
+                                      : null,
                                   validator: (value) {
                                     if (value == null) {
                                       return 'Please Enter Sex';
@@ -279,13 +318,18 @@ class _UpdateOrRegisterPatientState
                               subCity: capitalize(subCityController.text),
                               diagnosis: diagnosisController
                                   .text, // didn't make uppercase
-                              registeredOn: DateTime.now(),
+                              registeredOn: widget.isUpdate
+                                  ? widget.patient!.registeredOn
+                                  : DateTime.now(),
+                              id: widget.isUpdate ? widget.patient!.id : null,
                             );
 
-                            registerPatient(newPatient, context);
+                            widget.isUpdate
+                                ? updatePatientRecord(newPatient, context)
+                                : registerPatient(newPatient, context);
                           }
                         },
-                        title: 'REGISTER',
+                        title: widget.isUpdate ? 'UPDATE' : 'REGISTER',
                         backgroundColor: Theme.of(context).primaryColor,
                       )
                     ],

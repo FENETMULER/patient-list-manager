@@ -7,6 +7,7 @@ import '../main_action_button.dart';
 import '../cancel_button.dart';
 import '../../models/patient.dart';
 import './delete_alert.dart';
+import './update_or_register_patient.dart';
 
 class PatientDetails extends StatelessWidget {
   final Patient patient;
@@ -22,9 +23,13 @@ class PatientDetails extends StatelessWidget {
   void displayDeleteAlert(context) {
     showDialog(
         context: context,
-        builder: (context) {
-          return DeleteAlert(objectId: patient.id!);
-        });
+        builder: (context) => DeleteAlert(objectId: patient.id!));
+  }
+
+  void displayUpdateDialog(context) {
+    showDialog(
+        context: context,
+        builder: (context) => UpdateOrRegisterPatient.update(patient: patient));
   }
 
   PatientDetails({required this.patient});
@@ -173,7 +178,9 @@ class PatientDetails extends StatelessWidget {
                       backgroundColor: Theme.of(context).colorScheme.error),
                   const SizedBox(width: 25.0),
                   MainActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        displayUpdateDialog(context);
+                      },
                       title: 'UPDATE',
                       backgroundColor: Theme.of(context).primaryColor),
                 ],
