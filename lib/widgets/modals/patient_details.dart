@@ -32,7 +32,7 @@ class PatientDetails extends StatelessWidget {
         builder: (context) => UpdateOrRegisterPatient.update(patient: patient));
   }
 
-  PatientDetails({required this.patient});
+  PatientDetails({required this.patient, super.key});
 
   Widget detailBuilder(
       {context, required String title, required String value}) {

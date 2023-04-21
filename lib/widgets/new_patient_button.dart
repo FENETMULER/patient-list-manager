@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NewPatientButton extends StatefulWidget {
   final VoidCallback onPressed;
-  const NewPatientButton({required this.onPressed});
+  const NewPatientButton({required this.onPressed, super.key});
 
   @override
   State<NewPatientButton> createState() => _NewPatientButtonState();

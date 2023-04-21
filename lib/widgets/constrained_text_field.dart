@@ -9,7 +9,8 @@ class ConstrainedTextField extends StatelessWidget {
       {required this.label,
       required this.isMultiline,
       required this.controller,
-      this.validator});
+      this.validator,
+      super.key});
 
   @override
   Widget build(BuildContext context) {

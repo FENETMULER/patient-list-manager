@@ -8,7 +8,8 @@ import './sidebar_tile.dart';
 class Sidebar extends StatelessWidget {
   final Function changePage;
   final int pageToDisplay;
-  const Sidebar({required this.changePage, required this.pageToDisplay});
+  const Sidebar(
+      {required this.changePage, required this.pageToDisplay, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ enum Operation {
 
 class Success extends StatelessWidget {
   final Operation operation;
-  const Success({required this.operation});
+  const Success({required this.operation, super.key});
 
   @override
   Widget build(BuildContext context) {

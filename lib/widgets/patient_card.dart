@@ -7,7 +7,7 @@ import '../utils/ui_helpers.dart';
 class PatientCard extends StatefulWidget {
   final Patient patient;
 
-  const PatientCard({required this.patient});
+  const PatientCard({required this.patient, super.key});
 
   @override
   State<PatientCard> createState() => _PatientCardState();

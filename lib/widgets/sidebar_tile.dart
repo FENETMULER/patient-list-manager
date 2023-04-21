@@ -9,7 +9,8 @@ class SidebarTile extends StatelessWidget {
       {required this.icon,
       required this.title,
       required this.isSelected,
-      required this.changePage});
+      required this.changePage,
+      super.key});
 
   @override
   Widget build(BuildContext context) {

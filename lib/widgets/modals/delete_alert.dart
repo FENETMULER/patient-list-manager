@@ -13,7 +13,7 @@ import '../../providers/patients_providers.dart';
 
 class DeleteAlert extends ConsumerStatefulWidget {
   final mongodb.ObjectId objectId;
-  const DeleteAlert({required this.objectId});
+  const DeleteAlert({required this.objectId, super.key});
 
   @override
   ConsumerState<DeleteAlert> createState() => _DeleteAlertState();

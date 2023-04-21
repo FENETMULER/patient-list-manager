@@ -15,7 +15,7 @@ Future<void> main() async {
     center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
-    title: 'Patient Management',
+    title: 'Patient Manager',
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
