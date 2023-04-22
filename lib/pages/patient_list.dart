@@ -99,10 +99,11 @@ class _PatientListState extends ConsumerState<PatientList> {
                   } else {
                     final data = snapshot.data;
                     final searchQuery = ref.read(searchQueryProvider);
+                    final numberOfPatients = data!.length;
                     return Text(
                       searchQuery.isEmpty
-                          ? 'All Patients (${data!.length})'
-                          : 'Results (${data!.length})',
+                          ? 'All Patients ($numberOfPatients)'
+                          : 'Results ($numberOfPatients)',
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!

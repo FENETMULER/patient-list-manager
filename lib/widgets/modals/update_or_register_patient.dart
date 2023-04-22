@@ -80,6 +80,10 @@ class _UpdateOrRegisterPatientState
     await dbRegisterPatient(patientMap);
     ref.refresh(recentPatientsProvider);
 
+    // update patient list when a new patient is added
+    final searchQuery = ref.read(searchQueryProvider);
+    ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
+
     await displaySuccessModal(Operation.registered, context);
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
