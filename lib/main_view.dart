@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import './pages/home_page.dart';
 import './pages/patient_list.dart';
 import './widgets/sidebar.dart';
 import './widgets/new_patient_button.dart';
 import 'widgets/modals/update_or_register_patient.dart';
-import './widgets/modals/success.dart';
-import './services/patient_services.dart';
-import './models/patient.dart';
-import './utils/ui_helpers.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
