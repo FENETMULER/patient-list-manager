@@ -33,7 +33,7 @@ Future<List<Map<String, dynamic>>> dbGetAllPatients() async {
 
 Future<List<Map<String, dynamic>>> dbGetRecentPatients() async {
   try {
-    return coll
+    return await coll
         .find(where.sortBy('registeredOn', descending: true).limit(5))
         .toList();
   } catch (e) {
@@ -63,6 +63,28 @@ Future<void> dbUpdatePatient(Patient patient) async {
       'diagnosis': patient.diagnosis,
       'registeredOn': patient.registeredOn,
     });
+  } catch (e) {
+    return Future.error('error');
+  }
+}
+
+Future<List<Map<String, dynamic>>> dbGetSearchResults(
+    String searchQuery) async {
+  try {
+    return await coll.aggregateToStream([
+      {
+        r'$set': {
+          'nameAndNumber': {
+            r'$concat': [r'$firstName', ' ', r'$lastName', ' ', r'$phoneNumber']
+          }
+        }
+      },
+      {
+        r'$match': {
+          'nameAndNumber': {r'$regex': searchQuery, r'$options': 'i'}
+        }
+      }
+    ]).toList();
   } catch (e) {
     return Future.error('error');
   }
