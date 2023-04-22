@@ -8,7 +8,8 @@ class MainActionButton extends StatelessWidget {
   const MainActionButton(
       {required this.onPressed,
       required this.title,
-      required this.backgroundColor});
+      required this.backgroundColor,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
