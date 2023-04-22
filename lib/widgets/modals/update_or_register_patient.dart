@@ -114,7 +114,7 @@ class _UpdateOrRegisterPatientState
       houseNumberController.text = patient.houseNumber!;
       districtController.text = patient.district!;
       subCityController.text = patient.subCity!;
-      diagnosisController.text = patient.subCity!;
+      diagnosisController.text = patient.diagnosis!;
     }
   }
 
