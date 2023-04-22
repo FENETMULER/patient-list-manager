@@ -83,6 +83,11 @@ Future<List<Map<String, dynamic>>> dbGetSearchResults(
         r'$match': {
           'nameAndNumber': {r'$regex': searchQuery, r'$options': 'i'}
         }
+      },
+      {
+        r'$sort': {
+          'registeredOn': -1,
+        }
       }
     ]).toList();
   } catch (e) {
