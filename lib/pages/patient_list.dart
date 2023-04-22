@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:patient_list_management_system/providers/search_query_provider.dart';
 
 import '../widgets/patient_card.dart';
 import '../widgets/no_record_found.dart';
 import '../services/patient_services.dart';
 import '../models/patient.dart';
+import '../providers/search_results_provider.dart';
 
-class PatientList extends StatefulWidget {
+class PatientList extends ConsumerStatefulWidget {
   const PatientList({super.key});
 
   @override
-  State<PatientList> createState() => _PatientListState();
+  ConsumerState<PatientList> createState() => _PatientListState();
 }
 
-class _PatientListState extends State<PatientList> {
+class _PatientListState extends ConsumerState<PatientList> {
   final TextEditingController searchController = TextEditingController();
   final ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
+    var searchResults = ref.watch(searchResultsProvider);
+
     return Container(
       color: Theme.of(context).colorScheme.background,
       child: Container(
@@ -40,6 +46,14 @@ class _PatientListState extends State<PatientList> {
                       color: Color.fromARGB(70, 0, 0, 0))
                 ]),
                 child: TextField(
+                  onChanged: (value) {
+                    ref
+                        .read(searchResultsProvider.notifier)
+                        .newSearchResults(value);
+                    ref
+                        .read(searchQueryProvider.notifier)
+                        .changeSearchQuery(value);
+                  },
                   style: Theme.of(context)
                       .textTheme
                       .labelMedium!
@@ -76,11 +90,33 @@ class _PatientListState extends State<PatientList> {
 
             const SizedBox(height: 30.0),
             // Recents
-            Text(
-              'Results',
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.bold, color: Colors.grey[800]),
+            FutureBuilder(
+              future: searchResults,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return const Text('Error!');
+                  } else {
+                    final data = snapshot.data;
+                    final searchQuery = ref.read(searchQueryProvider);
+                    return Text(
+                      searchQuery.isEmpty
+                          ? 'All Patients (${data!.length})'
+                          : 'Results (${data!.length})',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[800]),
+                    );
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
             ),
+
             const SizedBox(height: 15.0),
             // Recently Registered
             Expanded(
@@ -91,11 +127,42 @@ class _PatientListState extends State<PatientList> {
                 child: SingleChildScrollView(
                   controller: scrollController,
                   child: FutureBuilder(
-                      // future: // Get patients based on search value
-                      builder: (context, snapshot) {
-                    return Container();
-                  } // Build list of PatientCards based on search value
-                      ),
+                    future:
+                        searchResults, // getting 5 recently registered patients.
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Text("Couldn't Load Records",
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0));
+                        } else {
+                          return Column(
+                              children: snapshot.data!
+                                  .map((patientMap) => PatientCard(
+                                        patient: Patient(
+                                            id: patientMap['_id'],
+                                            firstName: patientMap['firstName'],
+                                            lastName: patientMap['lastName'],
+                                            age: patientMap['age'],
+                                            sex: patientMap['sex'],
+                                            phoneNumber:
+                                                patientMap['phoneNumber'],
+                                            registeredOn:
+                                                patientMap['registeredOn'],
+                                            houseNumber:
+                                                patientMap['houseNumber'],
+                                            district: patientMap['district'],
+                                            subCity: patientMap['subCity'],
+                                            diagnosis: patientMap['diagnosis']),
+                                      ))
+                                  .toList());
+                        }
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
                 ),
               ),
             ),

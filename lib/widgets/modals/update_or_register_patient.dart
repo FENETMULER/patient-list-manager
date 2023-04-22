@@ -12,15 +12,17 @@ import '../../utils/ui_helpers.dart';
 import './success.dart';
 import '../../services/patient_services.dart';
 import '../../providers/patients_providers.dart';
+import '../../providers/search_query_provider.dart';
+import '../../providers/search_results_provider.dart';
 
 class UpdateOrRegisterPatient extends ConsumerStatefulWidget {
   late bool isUpdate;
   Patient? patient;
-  UpdateOrRegisterPatient() {
+  UpdateOrRegisterPatient({super.key}) {
     isUpdate = false;
   }
 
-  UpdateOrRegisterPatient.update({required this.patient}) {
+  UpdateOrRegisterPatient.update({required this.patient, super.key}) {
     isUpdate = true;
   }
   @override
@@ -89,6 +91,10 @@ class _UpdateOrRegisterPatientState
     await displaySuccessModal(Operation.updated, context);
     Navigator.of(context).popUntil((route) => route.isFirst);
     displayPatientDetailsModal(context, patient);
+
+    // getting searchQuery and updating the search results after updating patient record.
+    final searchQuery = ref.read(searchQueryProvider);
+    ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
   }
 
   @override
