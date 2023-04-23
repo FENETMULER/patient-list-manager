@@ -10,6 +10,8 @@ import '../../services/patient_services.dart';
 import './success.dart';
 import '../../utils/ui_helpers.dart';
 import '../../providers/patients_providers.dart';
+import '../../providers/search_query_provider.dart';
+import '../../providers/search_results_provider.dart';
 
 class DeleteAlert extends ConsumerStatefulWidget {
   final mongodb.ObjectId objectId;
@@ -24,6 +26,10 @@ class _DeleteAlertState extends ConsumerState<DeleteAlert> {
     await dbDeletePatient(widget.objectId);
     // TODO: handle delete errors
     ref.refresh(recentPatientsProvider);
+
+    // update PatientList when patient is deleted
+    final searchQuery = ref.read(searchQueryProvider);
+    ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
 
     await displaySuccessModal(Operation.deleted, context);
     Navigator.of(context).popUntil((route) => route.isFirst);
