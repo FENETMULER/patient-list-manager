@@ -21,6 +21,18 @@ class _PatientListState extends ConsumerState<PatientList> {
   final ScrollController scrollController = ScrollController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    searchController.text = ref.read(searchQueryProvider);
+    // so that the search bar state (it's text) is preserved when page changes (when we go from PatientList -> Home -> PatientList),
+    // otherwise search bar will be empty but the search results will be according to the previous searchQuery
+    // if this line was in build() it would make the search bar act buggy,
+    // that's why we need to initialize the search bar's text when it's first inserted into the tree and not on every build invocation
+  }
+
+  @override
   Widget build(BuildContext context) {
     var searchResults = ref.watch(searchResultsProvider);
 
@@ -139,26 +151,32 @@ class _PatientListState extends ConsumerState<PatientList> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0));
                         } else {
-                          return Column(
-                              children: snapshot.data!
-                                  .map((patientMap) => PatientCard(
-                                        patient: Patient(
-                                            id: patientMap['_id'],
-                                            firstName: patientMap['firstName'],
-                                            lastName: patientMap['lastName'],
-                                            age: patientMap['age'],
-                                            sex: patientMap['sex'],
-                                            phoneNumber:
-                                                patientMap['phoneNumber'],
-                                            registeredOn:
-                                                patientMap['registeredOn'],
-                                            houseNumber:
-                                                patientMap['houseNumber'],
-                                            district: patientMap['district'],
-                                            subCity: patientMap['subCity'],
-                                            diagnosis: patientMap['diagnosis']),
-                                      ))
-                                  .toList());
+                          return snapshot.data!.isEmpty
+                              ? const NoRecordFound()
+                              : Column(
+                                  children: snapshot.data!
+                                      .map((patientMap) => PatientCard(
+                                            patient: Patient(
+                                                id: patientMap['_id'],
+                                                firstName:
+                                                    patientMap['firstName'],
+                                                lastName:
+                                                    patientMap['lastName'],
+                                                age: patientMap['age'],
+                                                sex: patientMap['sex'],
+                                                phoneNumber:
+                                                    patientMap['phoneNumber'],
+                                                registeredOn:
+                                                    patientMap['registeredOn'],
+                                                houseNumber:
+                                                    patientMap['houseNumber'],
+                                                district:
+                                                    patientMap['district'],
+                                                subCity: patientMap['subCity'],
+                                                diagnosis:
+                                                    patientMap['diagnosis']),
+                                          ))
+                                      .toList());
                         }
                       }
                       return const CircularProgressIndicator();
