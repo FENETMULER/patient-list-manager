@@ -5,29 +5,21 @@ import '../models/patient.dart';
 
 var db = Db(connectionString);
 
-Future<void> connectDb() async {
+Future<dynamic> connectDb() async {
   try {
     await db.open();
   } catch (e) {
-    print(e);
+    return Future.error("Couldn't Connect to Database");
   }
 }
 
 var coll = db.collection('patients');
 
-Future<void> dbRegisterPatient(Map<String, dynamic> patientMap) async {
-  await coll.insertOne(patientMap);
-}
-
-Future<List<Map<String, dynamic>>> dbGetAllPatients() async {
+Future<dynamic> dbRegisterPatient(Map<String, dynamic> patientMap) async {
   try {
-    var res = await coll
-        .find(where.sortBy('registeredOn', descending: true))
-        .toList();
-
-    return res;
+    await coll.insertOne(patientMap);
   } catch (e) {
-    return Future.error('error');
+    throw Exception("Couldn't Register Patient");
   }
 }
 
@@ -37,7 +29,7 @@ Future<List<Map<String, dynamic>>> dbGetRecentPatients() async {
         .find(where.sortBy('registeredOn', descending: true).limit(5))
         .toList();
   } catch (e) {
-    return Future.error('error');
+    return Future.error("Couldn't Load Recent Patients");
   }
 }
 
@@ -45,7 +37,7 @@ Future<void> dbDeletePatient(id) async {
   try {
     await coll.deleteOne(where.eq('_id', id));
   } catch (e) {
-    return Future.error('error');
+    throw Exception("Couldn't Delete Record");
   }
 }
 
@@ -64,7 +56,7 @@ Future<void> dbUpdatePatient(Patient patient) async {
       'registeredOn': patient.registeredOn,
     });
   } catch (e) {
-    return Future.error('error');
+    throw Exception("Couldn't Update Record");
   }
 }
 
@@ -91,6 +83,9 @@ Future<List<Map<String, dynamic>>> dbGetSearchResults(
       }
     ]).toList();
   } catch (e) {
-    return Future.error('error');
+    if (searchQuery.isEmpty) {
+      return Future.error("Couldn't Load Records");
+    }
+    return Future.error("Couldn't Get Search Results");
   }
 }
