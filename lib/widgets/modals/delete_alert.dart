@@ -25,7 +25,7 @@ class _DeleteAlertState extends ConsumerState<DeleteAlert> {
   void deletePatient(context) async {
     await dbDeletePatient(widget.objectId);
     // TODO: handle delete errors
-    ref.refresh(recentPatientsProvider);
+    ref.invalidate(recentPatientsProvider);
 
     // update PatientList when patient is deleted
     final searchQuery = ref.read(searchQueryProvider);

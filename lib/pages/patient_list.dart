@@ -22,11 +22,10 @@ class _PatientListState extends ConsumerState<PatientList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     searchController.text = ref.read(searchQueryProvider);
-    // so that the search bar state (it's text) is preserved when page changes (when we go from PatientList -> Home -> PatientList),
+    // so that the search bar state (its text) is preserved when page changes (when we go from PatientList -> Home -> PatientList),
     // otherwise search bar will be empty but the search results will be according to the previous searchQuery
     // if this line was in build() it would make the search bar act buggy,
     // that's why we need to initialize the search bar's text when it's first inserted into the tree and not on every build invocation
@@ -145,11 +144,13 @@ class _PatientListState extends ConsumerState<PatientList> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
-                          return Text("Couldn't Load Records",
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.error,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0));
+                          return Text(
+                            "Couldn't Load Records",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0),
+                          );
                         } else {
                           return snapshot.data!.isEmpty
                               ? const NoRecordFound()
@@ -157,26 +158,26 @@ class _PatientListState extends ConsumerState<PatientList> {
                                   children: snapshot.data!
                                       .map((patientMap) => PatientCard(
                                             patient: Patient(
-                                                id: patientMap['_id'],
-                                                firstName:
-                                                    patientMap['firstName'],
-                                                lastName:
-                                                    patientMap['lastName'],
-                                                age: patientMap['age'],
-                                                sex: patientMap['sex'],
-                                                phoneNumber:
-                                                    patientMap['phoneNumber'],
-                                                registeredOn:
-                                                    patientMap['registeredOn'],
-                                                houseNumber:
-                                                    patientMap['houseNumber'],
-                                                district:
-                                                    patientMap['district'],
-                                                subCity: patientMap['subCity'],
-                                                diagnosis:
-                                                    patientMap['diagnosis']),
+                                              id: patientMap['_id'],
+                                              firstName:
+                                                  patientMap['firstName'],
+                                              lastName: patientMap['lastName'],
+                                              age: patientMap['age'],
+                                              sex: patientMap['sex'],
+                                              phoneNumber:
+                                                  patientMap['phoneNumber'],
+                                              registeredOn:
+                                                  patientMap['registeredOn'],
+                                              houseNumber:
+                                                  patientMap['houseNumber'],
+                                              district: patientMap['district'],
+                                              subCity: patientMap['subCity'],
+                                              diagnosis:
+                                                  patientMap['diagnosis'],
+                                            ),
                                           ))
-                                      .toList());
+                                      .toList(),
+                                );
                         }
                       }
                       return const CircularProgressIndicator();

@@ -78,7 +78,7 @@ class _UpdateOrRegisterPatientState
       'registeredOn': patient.registeredOn,
     };
     await dbRegisterPatient(patientMap);
-    ref.refresh(recentPatientsProvider);
+    ref.invalidate(recentPatientsProvider);
 
     // update patient list when a new patient is added
     final searchQuery = ref.read(searchQueryProvider);
@@ -90,7 +90,7 @@ class _UpdateOrRegisterPatientState
 
   void updatePatientRecord(patient, context) async {
     await dbUpdatePatient(patient);
-    ref.refresh(recentPatientsProvider);
+    ref.invalidate(recentPatientsProvider);
 
     await displaySuccessModal(Operation.updated, context);
     Navigator.of(context).popUntil((route) => route.isFirst);
