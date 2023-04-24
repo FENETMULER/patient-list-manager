@@ -73,7 +73,10 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
               error: (error, stackTrace) => Text(
                 'Error: $error',
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0),
               ),
               loading: () => const CircularProgressIndicator(),
             )

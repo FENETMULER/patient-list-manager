@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../main_action_button.dart';
 import '../../services/patient_services.dart';
-import './success.dart';
+import 'message_modal.dart';
 import '../../utils/ui_helpers.dart';
 import '../../providers/patients_providers.dart';
 import '../../providers/search_query_provider.dart';
@@ -23,16 +23,21 @@ class DeleteAlert extends ConsumerStatefulWidget {
 
 class _DeleteAlertState extends ConsumerState<DeleteAlert> {
   void deletePatient(context) async {
-    await dbDeletePatient(widget.objectId);
-    // TODO: handle delete errors
-    ref.invalidate(recentPatientsProvider);
+    try {
+      await dbDeletePatient(widget.objectId);
 
-    // update PatientList when patient is deleted
-    final searchQuery = ref.read(searchQueryProvider);
-    ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
+      ref.invalidate(recentPatientsProvider);
 
-    await displaySuccessModal(Operation.deleted, context);
-    Navigator.of(context).popUntil((route) => route.isFirst);
+      // update PatientList when patient is deleted
+      final searchQuery = ref.read(searchQueryProvider);
+      ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
+
+      await displayMessageModal(Operation.deleted, context);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } catch (e) {
+      await displayMessageModal(Operation.error, context);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    }
   }
 
   @override

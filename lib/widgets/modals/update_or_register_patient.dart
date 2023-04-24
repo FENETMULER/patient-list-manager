@@ -9,7 +9,7 @@ import '../cancel_button.dart';
 import '../main_action_button.dart';
 import '../../models/patient.dart';
 import '../../utils/ui_helpers.dart';
-import './success.dart';
+import 'message_modal.dart';
 import '../../services/patient_services.dart';
 import '../../providers/patients_providers.dart';
 import '../../providers/search_query_provider.dart';
@@ -65,40 +65,49 @@ class _UpdateOrRegisterPatientState
   }
 
   void registerPatient(Patient patient, context) async {
-    var patientMap = {
-      'firstName': patient.firstName,
-      'lastName': patient.lastName,
-      'age': patient.age,
-      'sex': patient.sex,
-      'phoneNumber': patient.phoneNumber,
-      'houseNumber': patient.houseNumber,
-      'district': patient.district,
-      'subCity': patient.subCity,
-      'diagnosis': patient.diagnosis,
-      'registeredOn': patient.registeredOn,
-    };
-    await dbRegisterPatient(patientMap);
-    ref.invalidate(recentPatientsProvider);
+    try {
+      var patientMap = {
+        'firstName': patient.firstName,
+        'lastName': patient.lastName,
+        'age': patient.age,
+        'sex': patient.sex,
+        'phoneNumber': patient.phoneNumber,
+        'houseNumber': patient.houseNumber,
+        'district': patient.district,
+        'subCity': patient.subCity,
+        'diagnosis': patient.diagnosis,
+        'registeredOn': patient.registeredOn,
+      };
+      await dbRegisterPatient(patientMap);
+      ref.invalidate(recentPatientsProvider);
 
-    // update patient list when a new patient is added
-    final searchQuery = ref.read(searchQueryProvider);
-    ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
+      // update patient list when a new patient is added
+      final searchQuery = ref.read(searchQueryProvider);
+      ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
 
-    await displaySuccessModal(Operation.registered, context);
-    Navigator.of(context).popUntil((route) => route.isFirst);
+      await displayMessageModal(Operation.registered, context);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } catch (e) {
+      await displayMessageModal(Operation.error, context);
+    }
   }
 
   void updatePatientRecord(patient, context) async {
-    await dbUpdatePatient(patient);
-    ref.invalidate(recentPatientsProvider);
+    try {
+      await dbUpdatePatient(patient);
+      ref.invalidate(recentPatientsProvider);
 
-    await displaySuccessModal(Operation.updated, context);
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    displayPatientDetailsModal(context, patient);
+      await displayMessageModal(Operation.updated, context);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      displayPatientDetailsModal(context, patient);
 
-    // getting searchQuery and updating the search results after updating patient record.
-    final searchQuery = ref.read(searchQueryProvider);
-    ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
+      // getting searchQuery and updating the search results after updating patient record.
+      final searchQuery = ref.read(searchQueryProvider);
+      ref.read(searchResultsProvider.notifier).newSearchResults(searchQuery);
+    } catch (e) {
+      // display error modal when an exception is thrown
+      displayMessageModal(Operation.error, context);
+    }
   }
 
   @override

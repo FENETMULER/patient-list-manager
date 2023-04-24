@@ -145,7 +145,7 @@ class _PatientListState extends ConsumerState<PatientList> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return Text(
-                            "Couldn't Load Records",
+                            "Error: ${snapshot.error}",
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.error,
                                 fontWeight: FontWeight.bold,
