@@ -284,17 +284,17 @@ class _UpdateOrRegisterPatientState
                                     }
                                   }),
                               ConstrainedTextField(
-                                label: 'House Number',
+                                label: 'House Number (optional)',
                                 controller: houseNumberController,
                                 isMultiline: false,
                               ),
                               ConstrainedTextField(
-                                label: 'District / Woreda',
+                                label: 'District / Woreda (optional)',
                                 controller: districtController,
                                 isMultiline: false,
                               ),
                               ConstrainedTextField(
-                                label: 'Sub-city',
+                                label: 'Sub-city (optional)',
                                 controller: subCityController,
                                 isMultiline: false,
                               )
@@ -306,7 +306,7 @@ class _UpdateOrRegisterPatientState
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ConstrainedTextField(
-                                label: 'Diagnosis',
+                                label: 'Diagnosis (optional)',
                                 controller: diagnosisController,
                                 isMultiline: true,
                               ),
