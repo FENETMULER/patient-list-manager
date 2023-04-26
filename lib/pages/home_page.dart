@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../widgets/patient_card.dart';
 import '../models/patient.dart';
@@ -55,20 +56,29 @@ class _HomePageState extends ConsumerState<HomePage> {
               data: (data) {
                 return Column(
                     children: data
-                        .map((patientMap) => PatientCard(
-                              patient: Patient(
-                                  id: patientMap['_id'],
-                                  firstName: patientMap['firstName'],
-                                  lastName: patientMap['lastName'],
-                                  age: patientMap['age'],
-                                  sex: patientMap['sex'],
-                                  phoneNumber: patientMap['phoneNumber'],
-                                  registeredOn: patientMap['registeredOn'],
-                                  houseNumber: patientMap['houseNumber'],
-                                  district: patientMap['district'],
-                                  subCity: patientMap['subCity'],
-                                  diagnosis: patientMap['diagnosis']),
-                            ))
+                        .map(
+                          (patientMap) => PatientCard(
+                            patient: Patient(
+                                id: patientMap['_id'],
+                                firstName: patientMap['firstName'],
+                                lastName: patientMap['lastName'],
+                                age: patientMap['age'],
+                                sex: patientMap['sex'],
+                                phoneNumber: patientMap['phoneNumber'],
+                                registeredOn: patientMap['registeredOn'],
+                                houseNumber: patientMap['houseNumber'],
+                                district: patientMap['district'],
+                                subCity: patientMap['subCity'],
+                                diagnosis: patientMap['diagnosis']),
+                          )
+                              .animate()
+                              .fadeIn(duration: 400.ms, curve: Curves.easeOut)
+                              .moveY(
+                                  duration: 400.ms,
+                                  begin: 60,
+                                  end: 0,
+                                  curve: Curves.easeOut),
+                        )
                         .toList());
               },
               error: (error, stackTrace) => Text(

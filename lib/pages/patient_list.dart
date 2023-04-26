@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:patient_list_management_system/providers/search_query_provider.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../widgets/patient_card.dart';
 import '../widgets/no_record_found.dart';
-import '../services/patient_services.dart';
+
 import '../models/patient.dart';
 import '../providers/search_results_provider.dart';
 
@@ -133,7 +134,6 @@ class _PatientListState extends ConsumerState<PatientList> {
             // Recently Registered
             Expanded(
               child: Scrollbar(
-                thumbVisibility: true,
                 trackVisibility: true,
                 controller: scrollController,
                 child: SingleChildScrollView(
@@ -154,28 +154,45 @@ class _PatientListState extends ConsumerState<PatientList> {
                         } else {
                           return snapshot.data!.isEmpty
                               ? const NoRecordFound()
+                                  .animate()
+                                  .fadeIn(
+                                      duration: 300.ms, curve: Curves.easeOut)
+                                  .moveY(
+                                      duration: 300.ms,
+                                      begin: 35,
+                                      end: 0,
+                                      curve: Curves.easeOut)
                               : Column(
                                   children: snapshot.data!
-                                      .map((patientMap) => PatientCard(
-                                            patient: Patient(
-                                              id: patientMap['_id'],
-                                              firstName:
-                                                  patientMap['firstName'],
-                                              lastName: patientMap['lastName'],
-                                              age: patientMap['age'],
-                                              sex: patientMap['sex'],
-                                              phoneNumber:
-                                                  patientMap['phoneNumber'],
-                                              registeredOn:
-                                                  patientMap['registeredOn'],
-                                              houseNumber:
-                                                  patientMap['houseNumber'],
-                                              district: patientMap['district'],
-                                              subCity: patientMap['subCity'],
-                                              diagnosis:
-                                                  patientMap['diagnosis'],
-                                            ),
-                                          ))
+                                      .map(
+                                        (patientMap) => PatientCard(
+                                          patient: Patient(
+                                            id: patientMap['_id'],
+                                            firstName: patientMap['firstName'],
+                                            lastName: patientMap['lastName'],
+                                            age: patientMap['age'],
+                                            sex: patientMap['sex'],
+                                            phoneNumber:
+                                                patientMap['phoneNumber'],
+                                            registeredOn:
+                                                patientMap['registeredOn'],
+                                            houseNumber:
+                                                patientMap['houseNumber'],
+                                            district: patientMap['district'],
+                                            subCity: patientMap['subCity'],
+                                            diagnosis: patientMap['diagnosis'],
+                                          ),
+                                        )
+                                            .animate()
+                                            .fadeIn(
+                                                duration: 300.ms,
+                                                curve: Curves.easeOut)
+                                            .moveY(
+                                                duration: 300.ms,
+                                                begin: 35,
+                                                end: 0,
+                                                curve: Curves.easeOut),
+                                      )
                                       .toList(),
                                 );
                         }
