@@ -18,14 +18,14 @@ class PatientList extends ConsumerStatefulWidget {
 }
 
 class _PatientListState extends ConsumerState<PatientList> {
-  final TextEditingController searchController = TextEditingController();
-  final ScrollController scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
 
-    searchController.text = ref.read(searchQueryProvider);
+    _searchController.text = ref.read(searchQueryProvider);
     // so that the search bar state (its text) is preserved when page changes (when we go from PatientList -> Home -> PatientList),
     // otherwise search bar will be empty but the search results will be according to the previous searchQuery
     // if this line was in build() it would make the search bar act buggy,
@@ -70,7 +70,7 @@ class _PatientListState extends ConsumerState<PatientList> {
                       .textTheme
                       .labelMedium!
                       .copyWith(color: Colors.grey[600]),
-                  controller: searchController,
+                  controller: _searchController,
                   decoration: InputDecoration(
                     hoverColor: Theme.of(context).disabledColor,
                     contentPadding: const EdgeInsets.all(20.0),
@@ -135,9 +135,9 @@ class _PatientListState extends ConsumerState<PatientList> {
             Expanded(
               child: Scrollbar(
                 trackVisibility: true,
-                controller: scrollController,
+                controller: _scrollController,
                 child: SingleChildScrollView(
-                  controller: scrollController,
+                  controller: _scrollController,
                   child: FutureBuilder(
                     future:
                         searchResults, // getting 5 recently registered patients.

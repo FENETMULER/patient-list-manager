@@ -22,7 +22,7 @@ class DeleteAlert extends ConsumerStatefulWidget {
 }
 
 class _DeleteAlertState extends ConsumerState<DeleteAlert> {
-  void deletePatient(context) async {
+  void _deletePatient(context) async {
     try {
       await dbDeletePatient(widget.objectId);
 
@@ -63,7 +63,7 @@ class _DeleteAlertState extends ConsumerState<DeleteAlert> {
           const CancelButton(),
           MainActionButton(
             onPressed: () {
-              deletePatient(context);
+              _deletePatient(context);
             },
             title: 'DELETE',
             backgroundColor: Theme.of(context).colorScheme.error,

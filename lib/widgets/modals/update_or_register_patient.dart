@@ -36,25 +36,25 @@ class _UpdateOrRegisterPatientState
 
   final ScrollController _scrollController = ScrollController();
 
-  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
 
-  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
 
-  final TextEditingController ageController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
 
-  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
 
-  final TextEditingController houseNumberController = TextEditingController();
+  final TextEditingController _houseNumberController = TextEditingController();
 
-  final TextEditingController districtController = TextEditingController();
+  final TextEditingController _districtController = TextEditingController();
 
-  final TextEditingController subCityController = TextEditingController();
+  final TextEditingController _subCityController = TextEditingController();
 
-  final TextEditingController diagnosisController = TextEditingController();
+  final TextEditingController _diagnosisController = TextEditingController();
 
-  late String sexValue;
+  late String _sexValue;
 
-  String capitalize(String str) {
+  String _capitalize(String str) {
     // make first letter uppercase
     if (str.isEmpty) return '';
     if (str.length == 1) return str.toUpperCase();
@@ -64,7 +64,7 @@ class _UpdateOrRegisterPatientState
     return upperCaseFirstLetter + restOfWord;
   }
 
-  void registerPatient(Patient patient, context) async {
+  void _registerPatient(Patient patient, context) async {
     try {
       var patientMap = {
         'firstName': patient.firstName,
@@ -92,7 +92,7 @@ class _UpdateOrRegisterPatientState
     }
   }
 
-  void updatePatientRecord(patient, context) async {
+  void _updatePatientRecord(patient, context) async {
     try {
       await dbUpdatePatient(patient);
       ref.invalidate(recentPatientsProvider);
@@ -115,15 +115,15 @@ class _UpdateOrRegisterPatientState
     super.initState();
     final patient = widget.patient;
     if (widget.isUpdate == true) {
-      firstNameController.text = patient!.firstName;
-      lastNameController.text = patient.lastName;
-      ageController.text = patient.age.toString();
-      sexValue = patient.sex;
-      phoneNumberController.text = patient.phoneNumber;
-      houseNumberController.text = patient.houseNumber!;
-      districtController.text = patient.district!;
-      subCityController.text = patient.subCity!;
-      diagnosisController.text = patient.diagnosis!;
+      _firstNameController.text = patient!.firstName;
+      _lastNameController.text = patient.lastName;
+      _ageController.text = patient.age.toString();
+      _sexValue = patient.sex;
+      _phoneNumberController.text = patient.phoneNumber;
+      _houseNumberController.text = patient.houseNumber!;
+      _districtController.text = patient.district!;
+      _subCityController.text = patient.subCity!;
+      _diagnosisController.text = patient.diagnosis!;
     }
   }
 
@@ -173,7 +173,7 @@ class _UpdateOrRegisterPatientState
                             children: [
                               ConstrainedTextField(
                                 label: 'First Name',
-                                controller: firstNameController,
+                                controller: _firstNameController,
                                 isMultiline: false,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -189,7 +189,7 @@ class _UpdateOrRegisterPatientState
                               ),
                               ConstrainedTextField(
                                 label: 'Last Name',
-                                controller: lastNameController,
+                                controller: _lastNameController,
                                 isMultiline: false,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -205,7 +205,7 @@ class _UpdateOrRegisterPatientState
                               ),
                               ConstrainedTextField(
                                 label: 'Age',
-                                controller: ageController,
+                                controller: _ageController,
                                 isMultiline: false,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -235,7 +235,7 @@ class _UpdateOrRegisterPatientState
                                           .labelLarge!
                                           .copyWith(color: Colors.black)),
                                   onChanged: (value) {
-                                    sexValue = value!;
+                                    _sexValue = value!;
                                   },
                                   alignment: Alignment.center,
                                   items: [
@@ -269,7 +269,7 @@ class _UpdateOrRegisterPatientState
                             children: [
                               ConstrainedTextField(
                                   label: 'Phone Number',
-                                  controller: phoneNumberController,
+                                  controller: _phoneNumberController,
                                   isMultiline: false,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -285,17 +285,17 @@ class _UpdateOrRegisterPatientState
                                   }),
                               ConstrainedTextField(
                                 label: 'House Number (optional)',
-                                controller: houseNumberController,
+                                controller: _houseNumberController,
                                 isMultiline: false,
                               ),
                               ConstrainedTextField(
                                 label: 'District / Woreda (optional)',
-                                controller: districtController,
+                                controller: _districtController,
                                 isMultiline: false,
                               ),
                               ConstrainedTextField(
                                 label: 'Sub-city (optional)',
-                                controller: subCityController,
+                                controller: _subCityController,
                                 isMultiline: false,
                               )
                             ],
@@ -307,7 +307,7 @@ class _UpdateOrRegisterPatientState
                             children: [
                               ConstrainedTextField(
                                 label: 'Diagnosis (optional)',
-                                controller: diagnosisController,
+                                controller: _diagnosisController,
                                 isMultiline: true,
                               ),
                             ],
@@ -327,15 +327,15 @@ class _UpdateOrRegisterPatientState
                           var isFormValid = _formKey.currentState!.validate();
                           if (isFormValid) {
                             Patient newPatient = Patient(
-                              firstName: capitalize(firstNameController.text),
-                              lastName: capitalize(lastNameController.text),
-                              age: int.parse(ageController.text),
-                              sex: sexValue,
-                              phoneNumber: phoneNumberController.text,
-                              houseNumber: houseNumberController.text,
-                              district: districtController.text,
-                              subCity: capitalize(subCityController.text),
-                              diagnosis: diagnosisController
+                              firstName: _capitalize(_firstNameController.text),
+                              lastName: _capitalize(_lastNameController.text),
+                              age: int.parse(_ageController.text),
+                              sex: _sexValue,
+                              phoneNumber: _phoneNumberController.text,
+                              houseNumber: _houseNumberController.text,
+                              district: _districtController.text,
+                              subCity: _capitalize(_subCityController.text),
+                              diagnosis: _diagnosisController
                                   .text, // didn't make uppercase
                               registeredOn: widget.isUpdate
                                   ? widget.patient!.registeredOn
@@ -344,8 +344,8 @@ class _UpdateOrRegisterPatientState
                             );
 
                             widget.isUpdate
-                                ? updatePatientRecord(newPatient, context)
-                                : registerPatient(newPatient, context);
+                                ? _updatePatientRecord(newPatient, context)
+                                : _registerPatient(newPatient, context);
                           }
                         },
                         title: widget.isUpdate ? 'UPDATE' : 'REGISTER',

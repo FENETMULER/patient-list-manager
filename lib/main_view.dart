@@ -14,14 +14,14 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  var pageToDisplay = 1; // 1 -> HomePage, 2 -> PatientList
-  void changePage(pageNumber) {
+  var _pageToDisplay = 1; // 1 -> HomePage, 2 -> PatientList
+  void _changePage(pageNumber) {
     setState(() {
-      pageToDisplay = pageNumber;
+      _pageToDisplay = pageNumber;
     });
   }
 
-  void displayRegistrationDialog(context) {
+  void _displayRegistrationDialog(context) {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -34,16 +34,16 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: NewPatientButton(onPressed: () {
-        displayRegistrationDialog(context);
+        _displayRegistrationDialog(context);
       }),
       body: Row(
         children: [
           Expanded(
               child: Sidebar(
-                  changePage: changePage, pageToDisplay: pageToDisplay)),
+                  changePage: _changePage, pageToDisplay: _pageToDisplay)),
           Expanded(
             flex: 3,
-            child: pageToDisplay == 1 ? HomePage() : PatientList(),
+            child: _pageToDisplay == 1 ? HomePage() : PatientList(),
           ),
         ],
       ),

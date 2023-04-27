@@ -10,7 +10,7 @@ class NewPatientButton extends StatefulWidget {
 }
 
 class _NewPatientButtonState extends State<NewPatientButton> {
-  Color backgroundColor = const Color(0xff0085FF);
+  Color _backgroundColor = const Color(0xff0085FF);
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,12 @@ class _NewPatientButtonState extends State<NewPatientButton> {
         cursor: SystemMouseCursors.click,
         onHover: (event) {
           setState(() {
-            backgroundColor = Theme.of(context).hoverColor;
+            _backgroundColor = Theme.of(context).hoverColor;
           });
         },
         onExit: (event) {
           setState(() {
-            backgroundColor = Theme.of(context).primaryColor;
+            _backgroundColor = Theme.of(context).primaryColor;
           });
         },
         child: GestureDetector(
@@ -37,7 +37,7 @@ class _NewPatientButtonState extends State<NewPatientButton> {
             width: 200,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: backgroundColor,
+                color: _backgroundColor,
                 boxShadow: const [
                   BoxShadow(
                     blurRadius: 16.0,

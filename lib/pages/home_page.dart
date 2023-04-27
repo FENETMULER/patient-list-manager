@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../widgets/patient_card.dart';
 import '../models/patient.dart';
-import '../services/patient_services.dart';
+
 import '../providers/patients_providers.dart';
 
 class HomePage extends ConsumerStatefulWidget {
