@@ -34,6 +34,8 @@ class _PatientListState extends ConsumerState<PatientList> {
 
   @override
   Widget build(BuildContext context) {
+    double animationBegin = 45; // begin value for moveY animation
+
     var searchResults = ref.watch(searchResultsProvider);
 
     return Container(
@@ -139,8 +141,7 @@ class _PatientListState extends ConsumerState<PatientList> {
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: FutureBuilder(
-                    future:
-                        searchResults, // getting 5 recently registered patients.
+                    future: searchResults,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
@@ -152,14 +153,20 @@ class _PatientListState extends ConsumerState<PatientList> {
                                 fontSize: 18.0),
                           );
                         } else {
+                          if (snapshot.data!.length <= 1) {
+                            animationBegin =
+                                0; // since we don't need moveY animation when results are <= 1
+                          }
                           return snapshot.data!.isEmpty
                               ? const NoRecordFound()
                                   .animate()
                                   .fadeIn(
-                                      duration: 300.ms, curve: Curves.easeOut)
+                                      duration: 300.ms,
+                                      curve: Curves.easeOut,
+                                      begin: 0)
                                   .moveY(
                                       duration: 300.ms,
-                                      begin: 35,
+                                      begin: animationBegin,
                                       end: 0,
                                       curve: Curves.easeOut)
                               : Column(
@@ -189,7 +196,7 @@ class _PatientListState extends ConsumerState<PatientList> {
                                                 curve: Curves.easeOut)
                                             .moveY(
                                                 duration: 300.ms,
-                                                begin: 35,
+                                                begin: animationBegin,
                                                 end: 0,
                                                 curve: Curves.easeOut),
                                       )

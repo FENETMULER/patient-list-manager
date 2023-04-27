@@ -75,7 +75,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               .fadeIn(duration: 400.ms, curve: Curves.easeOut)
                               .moveY(
                                   duration: 400.ms,
-                                  begin: 60,
+                                  begin: 70,
                                   end: 0,
                                   curve: Curves.easeOut),
                         )
