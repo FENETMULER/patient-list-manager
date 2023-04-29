@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:patient_list_management_system/providers/search_query_provider.dart';
+import '../providers/search_query_provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../widgets/patient_card.dart';
